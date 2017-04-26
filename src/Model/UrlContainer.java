@@ -8,4 +8,5 @@ public class UrlContainer {
     public static String RESUME = BASE + "resume";
     public static String ECHO = BASE + "echo";
     public static String HOME = BASE + "accueil";
+    public static String STAT = BASE + "stats";
 }

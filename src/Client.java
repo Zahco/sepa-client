@@ -12,7 +12,7 @@ public class Client {
 
     private JFrame mainFrame;
     private JButton resume;
-    private JButton echo;
+    private JButton stat;
     private JButton home;
     private JButton clear;
     private JTextArea responseTA;
@@ -31,7 +31,7 @@ public class Client {
         mainFrame = new JFrame("sepa-client");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         resume = new JButton("Resume");
-        echo = new JButton("Echo");
+        stat = new JButton("Stat");
         home = new JButton("Home");
         clear = new JButton("Clear");
         responseTA = new JTextArea(5, 20);
@@ -41,7 +41,7 @@ public class Client {
     private void placeComponents() {
         JPanel north = new JPanel(); {
             north.add(resume);
-            north.add(echo);
+            north.add(stat);
             north.add(home);
             north.add(clear);
         }
@@ -63,6 +63,13 @@ public class Client {
         home.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 String response = new RestApi().getHome();
+                responseTA.setText(response);
+            }
+        });
+        stat.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                String response = new RestApi().getStat();
+                System.out.println(response);
                 responseTA.setText(response);
             }
         });

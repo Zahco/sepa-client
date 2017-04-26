@@ -21,6 +21,9 @@ public class RestApi {
     public String getHome() {
         return sendRequest(UrlContainer.HOME, "GET", null);
     }
+    public String getStat() {
+        return sendRequest(UrlContainer.STAT, "GET", null);
+    }
     private String sendRequest(String url, String method, Source source) {
         String response = "";
         try {
@@ -44,7 +47,7 @@ public class RestApi {
             // Print server response
             String output;
             while ((output = br.readLine()) != null) {
-                response += output;
+                response += output + "\n";
             }
 
             conn.disconnect();
