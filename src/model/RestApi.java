@@ -43,6 +43,9 @@ public class RestApi {
     public String getStat() {
         return sendRequest(UrlContainer.STAT, "GET", null);
     }
+    public String getTransaction(String num) {
+        return sendRequest(UrlContainer.TRX + "/" + num, "GET",null );
+    }
 
     public String setDepot(RootType rt) throws JAXBException {
         return sendRequest(UrlContainer.DEPOT, "POST",new JAXBSource(jc, rt));

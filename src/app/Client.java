@@ -32,6 +32,7 @@ public class Client {
     private JButton home;
     private JButton clear;
     private JButton depot;
+    private JButton trxbutton;
     private JTextArea mntid;
     private JTextArea num;
     private JTextArea ident;
@@ -41,6 +42,7 @@ public class Client {
     private JTextArea dbT;
     private JTextArea iban;
     private JTextArea comm;
+    private JTextArea trx;
 
     public Client() {
         createModel();
@@ -64,6 +66,10 @@ public class Client {
         home = new JButton("Home");
         clear = new JButton("Clear");
         depot = new JButton("Depot");
+        trxbutton = new JButton("Rechercher Transaction :");
+        trx = new JTextArea("1");
+        trx.setBorder(BorderFactory.createCompoundBorder(border,
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         ident = new JTextArea("Identifiant");
         ident.setBorder(BorderFactory.createCompoundBorder(border,
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -115,6 +121,11 @@ public class Client {
             west.add(depot);
         }
         mainFrame.add(west, BorderLayout.WEST);
+        JPanel south = new JPanel(); {
+            south.add(trxbutton);
+            south.add(trx);
+        }
+        mainFrame.add(south, BorderLayout.SOUTH);
     }
 
     private void createController() {
@@ -127,6 +138,12 @@ public class Client {
         home.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 String response = new RestApi().getHome();
+                responseTA.setText(response);
+            }
+        });
+        trxbutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                String response = new RestApi().getTransaction(trx.getText());
                 responseTA.setText(response);
             }
         });
