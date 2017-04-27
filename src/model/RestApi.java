@@ -37,6 +37,9 @@ public class RestApi {
     public String getResume() {
         return sendRequest(UrlContainer.RESUME, "GET", null);
     }
+    public String getReset() {
+        return sendRequest(UrlContainer.RESET, "GET", null);
+    }
     public String getHome() {
         return sendRequest(UrlContainer.HOME, "GET", null);
     }

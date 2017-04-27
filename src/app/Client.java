@@ -32,6 +32,7 @@ public class Client {
     private JButton home;
     private JButton clear;
     private JButton depot;
+    private JButton reset;
     private JButton trxbutton;
     private JTextArea mntid;
     private JTextArea num;
@@ -66,6 +67,7 @@ public class Client {
         home = new JButton("Home");
         clear = new JButton("Clear");
         depot = new JButton("Depot");
+        reset = new JButton("Reset Database");
         trxbutton = new JButton("Rechercher Transaction :");
         trx = new JTextArea("1");
         trx.setBorder(BorderFactory.createCompoundBorder(border,
@@ -97,10 +99,11 @@ public class Client {
 
     private void placeComponents() {
         JPanel north = new JPanel(); {
+            north.add(home);
             north.add(resume);
             north.add(stat);
-            north.add(home);
             north.add(clear);
+            north.add(reset);
         }
         mainFrame.add(north, BorderLayout.NORTH);
         JPanel center = new JPanel(); {
@@ -135,6 +138,12 @@ public class Client {
                 responseTA.setText(response);
             }
         });
+        reset.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                String response = new RestApi().getReset();
+                responseTA.setText(response);
+            }
+        });
         home.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 String response = new RestApi().getHome();
@@ -150,7 +159,6 @@ public class Client {
         stat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 String response = new RestApi().getStat();
-                System.out.println(response);
                 responseTA.setText(response);
             }
         });
@@ -203,7 +211,6 @@ public class Client {
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
-                System.out.println(response);
                 responseTA.setText(response);
             }
         });
