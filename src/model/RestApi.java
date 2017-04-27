@@ -64,9 +64,16 @@ public class RestApi {
                 transformer.transform(source, new StreamResult(os));
                 os.flush();
             }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
+            BufferedReader br;
+            boolean error = false;
+            try {
+                br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+            } catch (IOException e) {
+                br = new BufferedReader(new InputStreamReader(
+                        (conn.getErrorStream())));
+                error = true;
+            }
             // Print server response
             String output;
             while ((output = br.readLine()) != null) {
@@ -74,6 +81,11 @@ public class RestApi {
             }
 
             conn.disconnect();
+            if (error) {
+                String[] s = response.split("<body>");
+
+                return s[0] + "\n" + s[1];
+            }
 // indent response
 //http://stackoverflow.com/questions/139076/how-to-pretty-print-xml-from-java
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
