@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 /**
  * Created by geoffrey on 26/04/17.
@@ -9,4 +9,5 @@ public class UrlContainer {
     public static String ECHO = BASE + "echo";
     public static String HOME = BASE + "accueil";
     public static String STAT = BASE + "stats";
+    public static String DEPOT = BASE + "depot";
 }

@@ -1,8 +1,12 @@
-package Model;
+package model;
 
+import model.sepa.RootType;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.util.JAXBSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -20,7 +24,15 @@ import java.net.URL;
  * Created by geoffrey on 26/04/17.
  */
 public class RestApi {
-    public RestApi() {}
+    private JAXBContext jc;
+
+    public RestApi() {
+        try {
+            jc = JAXBContext.newInstance(RootType.class);
+        } catch (JAXBException je) {
+            System.out.println("Cannot create JAXBContext " + je);
+        }
+    }
 
     public String getResume() {
         return sendRequest(UrlContainer.RESUME, "GET", null);
@@ -30,6 +42,10 @@ public class RestApi {
     }
     public String getStat() {
         return sendRequest(UrlContainer.STAT, "GET", null);
+    }
+
+    public String setDepot(RootType rt) throws JAXBException {
+        return sendRequest(UrlContainer.DEPOT, "POST",new JAXBSource(jc, rt));
     }
     private String sendRequest(String url, String method, Source source) {
         String response = "";

@@ -1,6 +1,8 @@
-import Model.RestApi;
+import model.RestApi;
+import model.TransactionFactory;
 
 import javax.swing.*;
+import javax.xml.bind.JAXBException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +17,7 @@ public class Client {
     private JButton stat;
     private JButton home;
     private JButton clear;
+    private JButton depot;
     private JTextArea responseTA;
 
     public Client() {
@@ -34,7 +37,8 @@ public class Client {
         stat = new JButton("Stat");
         home = new JButton("Home");
         clear = new JButton("Clear");
-        responseTA = new JTextArea(5, 20);
+        depot = new JButton("Depot");
+        responseTA = new JTextArea(10, 20);
         responseTA.setEditable(false);
     }
 
@@ -44,6 +48,7 @@ public class Client {
             north.add(stat);
             north.add(home);
             north.add(clear);
+            north.add(depot);
         }
         mainFrame.add(north, BorderLayout.NORTH);
         JPanel center = new JPanel(); {
@@ -69,6 +74,18 @@ public class Client {
         stat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 String response = new RestApi().getStat();
+                System.out.println(response);
+                responseTA.setText(response);
+            }
+        });
+        depot.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                String response = null;
+                try {
+                    response = new RestApi().setDepot(TransactionFactory.exampleRootType());
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(response);
                 responseTA.setText(response);
             }
