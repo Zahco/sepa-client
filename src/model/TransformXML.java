@@ -18,7 +18,7 @@ public class TransformXML {
 		}
 	}
 
-	public static String getXML(String sourcePath, String xsltPath) throws TransformerException {
+	public static String getXML(String sourcePath, String xsltPath) throws Exception {
         TransformerFactory tFactory = TransformerFactory.newInstance();
         String result = "";
         try {

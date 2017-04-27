@@ -7,10 +7,18 @@ import model.sepa.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.xml.bind.JAXBException;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by geoffrey on 26/04/17.
@@ -143,8 +151,15 @@ public class Client {
 
                 DdtType ddtt = new DdtType();
                 ddtt.setMndtId(mntid.getText());
-                XMLGregorianCalendarImpl date = new XMLGregorianCalendarImpl();
-                ddtt.setDtOfSgntr(date);
+                GregorianCalendar cal = new GregorianCalendar();
+                cal.setTime(new Date());
+                XMLGregorianCalendar xmlDate = null;
+                try {
+                    xmlDate = DatatypeFactory.newInstance().newXMLGregorianCalendarDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH), DatatypeConstants.FIELD_UNDEFINED);
+                } catch (DatatypeConfigurationException e) {
+                    e.printStackTrace();
+                }
+                ddtt.setDtOfSgntr(xmlDate);
                 transaction.setDrctDbtTx(ddtt);
 
                 DAgentType dat = new DAgentType();
