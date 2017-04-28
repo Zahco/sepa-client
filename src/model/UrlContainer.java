@@ -12,4 +12,6 @@ public class UrlContainer {
     public static String DEPOT = BASE + "depot";
     public static String TRX = BASE + "trx";
     public static String RESET = BASE + "reset";
+    public static String DELETE = BASE + "delete";
+    public static String TEST = BASE + "test";
 }

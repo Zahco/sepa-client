@@ -34,6 +34,8 @@ public class Client {
     private JButton depot;
     private JButton reset;
     private JButton trxbutton;
+    private JButton deleteB;
+    private JButton test;
     private JTextArea mntid;
     private JTextArea num;
     private JTextArea ident;
@@ -44,6 +46,7 @@ public class Client {
     private JTextArea iban;
     private JTextArea comm;
     private JTextArea trx;
+    private JTextArea delete;
 
     public Client() {
         createModel();
@@ -69,6 +72,11 @@ public class Client {
         depot = new JButton("Depot");
         reset = new JButton("Reset Database");
         trxbutton = new JButton("Rechercher Transaction :");
+        test = new JButton("Add Example");
+        deleteB = new JButton("Supprimer Transaction : ");
+        delete = new JTextArea("1");
+        delete.setBorder(BorderFactory.createCompoundBorder(border,
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         trx = new JTextArea("1");
         trx.setBorder(BorderFactory.createCompoundBorder(border,
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -99,11 +107,17 @@ public class Client {
 
     private void placeComponents() {
         JPanel north = new JPanel(); {
-            north.add(home);
-            north.add(resume);
-            north.add(stat);
-            north.add(clear);
-            north.add(reset);
+            JPanel nc = new JPanel(); {
+                nc.add(home);
+                nc.add(resume);
+                nc.add(stat);
+            }
+            JPanel ne = new JPanel(); {
+                ne.add(clear, BorderLayout.EAST);
+                ne.add(reset, BorderLayout.EAST);
+            }
+            north.add(nc, BorderLayout.CENTER);
+            north.add(ne, BorderLayout.EAST);
         }
         mainFrame.add(north, BorderLayout.NORTH);
         JPanel center = new JPanel(); {
@@ -125,8 +139,21 @@ public class Client {
         }
         mainFrame.add(west, BorderLayout.WEST);
         JPanel south = new JPanel(); {
-            south.add(trxbutton);
-            south.add(trx);
+            JPanel sw = new JPanel(); {
+                sw.add(test);
+            }
+            JPanel se = new JPanel(); {
+                se.add(deleteB);
+                se.add(delete);
+            }
+            JPanel sc = new JPanel(); {
+                sc.add(trxbutton);
+                sc.add(trx);
+            }
+            south.add(sw, BorderLayout.WEST);
+            south.add(sc);
+            south.add(se, BorderLayout.EAST);
+
         }
         mainFrame.add(south, BorderLayout.SOUTH);
     }
@@ -147,6 +174,18 @@ public class Client {
         home.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 String response = new RestApi().getHome();
+                responseTA.setText(response);
+            }
+        });
+        deleteB.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                String response = new RestApi().delete(delete.getText());
+                responseTA.setText(response);
+            }
+        });
+        test.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                String response = new RestApi().test();
                 responseTA.setText(response);
             }
         });

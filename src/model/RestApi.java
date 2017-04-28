@@ -49,7 +49,12 @@ public class RestApi {
     public String getTransaction(String num) {
         return sendRequest(UrlContainer.TRX + "/" + num, "GET",null );
     }
-
+    public String test() {
+        return sendRequest(UrlContainer.TEST, "GET",null );
+    }
+    public String delete(String num) {
+        return sendRequest(UrlContainer.DELETE + "/" + num, "DELETE",null );
+    }
     public String setDepot(RootType rt) throws JAXBException {
         return sendRequest(UrlContainer.DEPOT, "POST",new JAXBSource(jc, rt));
     }
