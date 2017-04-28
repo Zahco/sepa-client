@@ -210,7 +210,13 @@ public class Client {
 
                 InstdAmtType iat = new InstdAmtType();
                 iat.setCcy(comb.getSelectedItem().toString());
-                iat.setValue(new BigDecimal(montant.getText()));
+                try {
+                    iat.setValue(new BigDecimal(montant.getText()));
+                } catch (NumberFormatException e) {
+                    responseTA.setText("<exception>Le montant n'est pas un nombre...</exception>");
+                    return;
+                }
+
                 transaction.setInstdAmt(iat);
 
                 DdtType ddtt = new DdtType();
